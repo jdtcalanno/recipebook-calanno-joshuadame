@@ -9,7 +9,7 @@ class Ingredient(models.Model):
         return '{}'.format(self.name)
     
     def get_absolute_url(self):
-        return reverse('myapp:recipeList', args=[str(self.pk)])
+        return reverse('ledger:recipeList', args=[str(self.pk)])
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,11 +21,13 @@ class Profile(models.Model):
 
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
+
     author = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
         related_name='recipes'
     )
+
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now=True,null=True)
 
@@ -33,17 +35,19 @@ class Recipe(models.Model):
         return 'Recipe: {}'.format(self.name)
     
     def get_absolute_url(self):
-        return reverse('myapp:recipeList', args=[str(self.pk)])
+        return reverse('ledger:recipeList', args=[str(self.pk)])
 
 class RecipeIngredient(models.Model):
     quantity = models.CharField(max_length=10)
+
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='recipe'
+        related_name='recipes'
     )
+
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        related_name='ingredients'
+        related_name='ingrediens'
     )
