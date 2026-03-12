@@ -3,6 +3,7 @@ from .models import Recipe, Ingredient, RecipeIngredient, Profile, RecipeImage
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
+
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
 
@@ -45,7 +46,7 @@ class RecipeImageAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {
             'fields': [
-                ('image'), 'recipe', 
+                ('image'), 'description', 'recipe', 
             ]
         }),
     ]

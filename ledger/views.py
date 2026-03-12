@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import RecipeIngredient, Recipe, Ingredient
+from .models import RecipeIngredient, Recipe, Ingredient, RecipeImage
 
 
 class RecipeListView(ListView):
@@ -41,3 +41,27 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
             request, 
             "ledger/recipeDetail.html", 
             ctx)
+
+
+class ImageAddView(LoginRequiredMixin, DetailView):
+    model = Recipe
+    template_name = 'ledger/imageAdd.html'
+    login_url = '.../accounts/login/'
+
+    def get(self, request, *args, **kwargs):
+        recipe = self.get_object()
+        return render(request, self.template_name, {'recipe': recipe, 'next': request.GET.get('next')})
+
+    def post(self, request, *args, **kwargs):
+        recipe = self.get_object()
+        image_file = request.FILES.get("image")
+        description = request.POST.get("description", "")
+
+        if image_file:
+            RecipeImage.objects.create(
+                recipe=recipe,
+                image=image_file,
+                description=description, 
+            )
+
+        return redirect(request.POST.get('next'))

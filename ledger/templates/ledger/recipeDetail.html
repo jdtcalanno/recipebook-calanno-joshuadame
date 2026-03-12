@@ -6,6 +6,16 @@
 {% block content %}
     <h2>{{ recipe.name }}</h2>
     <p>{{ recipe.author }}</p>
+
+    {% if recipe.images.exists %}
+        {% for img in recipe.images.all %}
+            <br>
+            <img src="{{ img.image.url }}" alt="{{ img.description }}">
+        {% endfor %}
+    {% endif %}
+
+    <br><a href="{% url 'ledger:image_add' recipe.pk %}">Add Image</a>
+
     <ul>
     {% for ri in ingredient_list %}
         <li>

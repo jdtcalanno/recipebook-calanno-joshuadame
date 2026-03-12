@@ -1,0 +1,22 @@
+{% extends 'ledger/template.html' %}
+{% load static %}
+
+{% block title %}Add Image{% endblock %}
+
+{% block content %}
+    <h2>{{ recipe.name }}</h2>
+    <p>{{ recipe.author }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">
+            <span>Image</span>
+            <input type="file" id="image" name="image" required>
+        </label>
+        <label for="description">
+            <span>Description</span>
+            <input type="text" id="description" name="description" maxlength="255" required>
+        </label>
+        <input type="hidden" name="next" value="{{ next|default:recipe.get_absolute_url }}">
+        <button type="submit">Add Image</button>
+    </form>
+{% endblock %}
