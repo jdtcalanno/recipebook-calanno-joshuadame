@@ -38,6 +38,7 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
         }),
     ]
 
+
 class RecipeImageAdmin(admin.ModelAdmin):
     model = RecipeImage
     search_fields = ('image', )
