@@ -125,3 +125,4 @@ DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 # Custom Login Flow
 
 LOGIN_REDIRECT_URL = "/recipes/list"
+LOGOUT_REDIRECT_URL = "/recipes/list"
