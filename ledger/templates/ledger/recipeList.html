@@ -7,7 +7,7 @@
     <h2>Recipe List</h2>
 
     {% if user.is_authenticated %}
-        <a href="{% url 'ledger:recipe_add' recipe.pk %}">Add Image</a>
+        <a href="{% url 'ledger:recipe_add' %}">Add Recipe</a>
     {% endif %}
     
     <br>

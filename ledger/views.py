@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import RecipeIngredient, Recipe, Ingredient, RecipeImage
 
@@ -65,3 +66,15 @@ class ImageAddView(LoginRequiredMixin, DetailView):
             )
 
         return redirect(request.POST.get('next'))
+
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    model = Recipe
+    fields = '__all__'
+    template_name = 'ledger/recipeAdd.html'
+    login_url = '../accounts/login/'
+    success_url = '../recipes/list'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super().form_valid(form)
